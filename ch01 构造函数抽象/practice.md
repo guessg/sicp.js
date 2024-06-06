@@ -48,10 +48,12 @@ undefined
 
 ```
 
-### 1.4 
+### 1.4
+
 略
 
 ### 1.5
+
 ```js
 > function p() {
 ... return p();
@@ -85,9 +87,42 @@ Uncaught RangeError: Maximum call stack size exceeded
     at p (REPL56:2:8)
 > 
 ```
+
 如果是应用序，则传递 p() 给 y 时候，会进行实参求值， 此时会无限递归，栈溢出。
 如果是正则序，则会先完全展开，最后才计算，返回结果 0.
+
 > x === 0 ? 0 : y
 > 0 === 0 ? 0 : p()
 > 0
 
+### 1.6
+
+由于 conditional 是一个函数，sqrt_iter 作为实参传递会被执行，进而导致无限递归。
+
+### 1.11
+
+```js
+
+// f(n) = f(n-1) * 2*f(n-2) + 3*f(n-3)
+
+// 递归版本
+function f(n) {
+    return n < 3
+    ? n
+    : f(n-1) + 2*f(n-2) + 3 * f(n-3)
+}
+
+// 非递归版本
+function f_iterative(n) {
+    return n < 3
+           ? n
+           : f_iterative_impl(2, 1, 0, n - 2);
+}
+function f_iterative_impl(a, b, c, count) {
+    return count === 0
+           ? a
+           : f_iterative_impl(a + 2 * b + 3 * c, a, b, count - 1); // 尾递归
+}
+
+f_iterative(5);
+```
