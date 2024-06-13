@@ -102,7 +102,6 @@ Uncaught RangeError: Maximum call stack size exceeded
 ### 1.11
 
 ```js
-
 // f(n) = f(n-1) * 2*f(n-2) + 3*f(n-3)
 
 // 递归版本
@@ -126,3 +125,83 @@ function f_iterative_impl(a, b, c, count) {
 
 f_iterative(5);
 ```
+
+### 1.12 
+```js
+function pascal_triangle(i, j) {
+    return j == 1 
+    ? 1
+    : i == j
+    ?
+    1
+    : pascal_triangle(i-1, j-1) + pascal_triangle(i-1, j);
+}
+
+> pascal_triangle(2,1)
+1
+> pascal_triangle(2,2)
+1
+> pascal_triangle(3,1)
+1
+> pascal_triangle(3,2)
+2
+> pascal_triangle(3,3)
+1
+> pascal_triangle(4,1)
+1
+> pascal_triangle(4,2)
+3
+> pascal_triangle(4,3)
+3
+> pascal_triangle(4,4)
+1
+> pascal_triangle(5,1)
+1
+> pascal_triangle(5,2)
+4
+> pascal_triangle(5,3)
+6
+> 
+```
+
+### 1.13
+略
+
+### 1.14
+略
+
+### 1.15
+```js
+> function cube(x) {
+... return x * x * x;
+... }
+
+> function p(x) {
+... return 3*x - 4*cube(x);
+... }
+
+> function sine(x) {
+... return !(abs(x) > 0.1)
+... ? x
+... : p(sine(x/3));
+... }
+
+> function abs(x) {
+... return x > 0 ? x : -x;
+... }
+undefined
+> sine(12.15)
+p running
+p running
+p running
+p running
+p running
+-0.39980345741334
+```
+
+阶增长： O(lg(n))
+
+### 1.16
+
+### 1.19
+如何证明？
