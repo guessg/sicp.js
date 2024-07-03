@@ -176,3 +176,110 @@ We need to apply the function step-by-step:
 ### Final Output
 
 Therefore, the output of `church_to_number(three)` is `3`.
+
+# 2.17
+```js
+// Type your program in here!
+pair(1, pair(2, pair(3, 4)));
+
+const one_to_five = list(1, 2,3,4,5);
+head(one_to_five);
+head(tail(one_to_five));
+
+pair(0, one_to_five);
+
+function list_ref(l, n) {
+    return n === 0 
+    ? head(l)
+    : list_ref(tail(l), n-1);
+}
+
+const squares = list(1,4,9,16);
+
+list_ref(squares, 3);
+
+function length(l) {
+    return is_null(l)
+    ? 0
+    : 1 + length(tail(l));
+}
+
+length(squares);
+
+function length_iter_version(items) {
+    function _iter(a, count) {
+        return is_null(a) 
+        ? count
+        : _iter(tail(a), count+1);
+    }
+    
+    return _iter(items, 0);
+}
+
+length_iter_version(squares);
+
+function append(list1, list2) {
+    return is_null(list1)
+    ? list2
+    : pair(head(list1), append(tail(list1), list2));
+}
+
+const odds = list(1,3,5,7);
+
+display_list(append(squares, odds));
+display_list(append(odds, squares));
+
+
+function last_pair(items) {
+    return is_null(tail(items))
+    ? items
+    : last_pair(tail(items));
+}
+
+display_list(last_pair(list(23, 72, 149, 34)));
+```
+
+# 2.18
+```js
+
+function reverse_bad_case(items) {
+    return is_null(items)
+    ? items
+    : pair(reverse(tail(items)), head(items));
+}
+
+
+function reverse(items) {
+    return is_null(items)
+           ? null
+           : append(reverse(tail(items)),
+	            pair(head(items), null));
+}
+
+display_list(reverse_bad_case(list(1, 4, 9, 16, 25))); // [[25, [16, [9, [4, null]]]], 1] // [list(25, 16, 9, 4), 1]
+display_list(reverse(list(1,4,9,16,25))); // [25, [16, [9, [4, [1, null]]]]] // list(25, 16, 9, 4, 1)
+```
+
+# 2.20
+> curry
+```js
+function plus_curried(x) {	    
+    return y => x + y;
+}
+
+function brooks(f, items) {
+    return is_null(items)
+           ? f
+           : brooks(f(head(items)), tail(items));
+}
+
+function brooks_curried(items) {
+    return brooks(head(items), tail(items));
+}
+
+brooks_curried(list(brooks_curried,
+                    list(brooks_curried, 
+                         list(plus_curried, 3, 4))));
+                         
+
+```
